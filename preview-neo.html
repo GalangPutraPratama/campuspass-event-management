@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPUSPASS - Neo Brutalism Preview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #EC4899;
+            --pink-light: #FCE7F3;
+            --yellow: #FEF08A;
+            --green: #BBF7D0;
+            --blue: #BFDBFE;
+            --purple: #DDD6FE;
+            --orange: #FED7AA;
+            --bg: #FFFBF5;
+            --text: #1a1a1a;
+            --border: #1a1a1a;
+            --shadow: 4px 4px 0px #1a1a1a;
+            --shadow-lg: 6px 6px 0px #1a1a1a;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        .navbar-neo {
+            background: var(--pink);
+            border-bottom: 3px solid var(--border);
+            padding: 12px 0;
+        }
+        .navbar-neo .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+        .navbar-neo .nav-link {
+            color: #fff;
+            font-weight: 600;
+            margin: 0 4px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+        .navbar-neo .nav-link:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-1px);
+        }
+        .btn-nav-login {
+            background: #fff;
+            color: var(--pink);
+            font-weight: 700;
+            border: 2.5px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 20px;
+            box-shadow: 3px 3px 0px var(--border);
+            transition: all 0.15s;
+        }
+        .btn-nav-login:hover {
+            transform: translate(1.5px, 1.5px);
+            box-shadow: 1.5px 1.5px 0px var(--border);
+            color: var(--pink);
+        }
+
+        /* HERO */
+        .hero-section {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        .hero-section h1 span {
+            background: var(--yellow);
+            padding: 2px 10px;
+            border-radius: 6px;
+            border: 2.5px solid var(--border);
+            display: inline-block;
+        }
+        .hero-section p {
+            font-size: 1.15rem;
+            color: #555;
+            max-width: 550px;
+            margin: 0 auto 28px;
+        }
+        .search-box {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            background: #fff;
+        }
+        .search-box input:focus { outline: none; box-shadow: var(--shadow-lg); }
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.15rem;
+            color: #888;
+        }
+
+        /* STATS */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 36px 0 48px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--green);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px 32px;
+            text-align: center;
+            min-width: 160px;
+        }
+        .stat-card:nth-child(2) { background: var(--blue); }
+        .stat-card:nth-child(3) { background: var(--purple); }
+        .stat-card .stat-num {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .stat-card .stat-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+        .section-heading span {
+            background: var(--pink-light);
+            padding: 2px 12px;
+            border-radius: 6px;
+            border: 2.5px solid var(--border);
+        }
+
+        /* EVENT CARDS */
+        .event-card {
+            background: #fff;
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.15s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px var(--border);
+        }
+        .event-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 2.5px solid var(--border);
+        }
+        .event-card .card-body {
+            padding: 16px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card .card-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .event-card .card-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        /* BADGES */
+        .badge-neo {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .badge-seminar { background: var(--blue); }
+        .badge-workshop { background: var(--green); }
+        .badge-lomba { background: var(--yellow); }
+        .badge-webinar { background: var(--purple); }
+
+        /* PROGRESS BAR */
+        .quota-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 99px;
+            border: 1.5px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+        .quota-bar-fill {
+            height: 100%;
+            background: var(--pink);
+            border-radius: 99px;
+        }
+        .quota-text {
+            font-size: 0.78rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* BUTTONS */
+        .btn-neo {
+            display: inline-block;
+            padding: 10px 24px;
+            background: var(--pink);
+            color: #fff;
+            font-weight: 700;
+            border: 2.5px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            transition: all 0.15s;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-neo:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border);
+            color: #fff;
+        }
+        .btn-neo-sm {
+            padding: 6px 16px;
+            font-size: 0.82rem;
+            box-shadow: 3px 3px 0px var(--border);
+        }
+        .btn-neo-outline {
+            background: #fff;
+            color: var(--text);
+        }
+        .btn-neo-outline:hover { color: var(--text); }
+
+        .card-footer-actions {
+            margin-top: auto;
+            padding-top: 12px;
+        }
+
+        /* FOOTER */
+        .footer-neo {
+            background: var(--text);
+            color: #fff;
+            text-align: center;
+            padding: 24px 0;
+            margin-top: 60px;
+            border-top: 3px solid var(--border);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2rem; }
+            .stats-row { gap: 12px; }
+            .stat-card { min-width: 130px; padding: 14px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-neo sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">⚡ CAMPUSPASS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: #fff;">
+                <i class="bi bi-list" style="color: #fff; font-size: 1.5rem;"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-1">
+                    <li class="nav-item"><a class="nav-link" href="#">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Check-in</a></li>
+                    <li class="nav-item ms-2"><a class="btn-nav-login" href="#">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Temukan <span>Event Kampus</span><br>Terbaik ✨</h1>
+            <p>Platform pendaftaran dan e-ticketing event kampus yang terintegrasi. Daftar, bayar, dan check-in dalam satu klik!</p>
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Cari event seru di kampusmu...">
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="container">
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-num">50+</div>
+                <div class="stat-label">Event</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">1.200+</div>
+                <div class="stat-label">Peserta</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">15+</div>
+                <div class="stat-label">UKM & Organisasi</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENT CARDS -->
+    <section class="container mb-5">
+        <h2 class="section-heading"><span>🎪 Event Mendatang</span></h2>
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/BFDBFE/1a1a1a?text=AI+%26+ML+Seminar" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-seminar">Seminar</span>
+                        <h5 class="card-title">Seminar Nasional AI & Machine Learning 2026</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 25 Nov 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Aula Utama
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 70%;"></div></div>
+                        <span class="quota-text">35/50 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/BBF7D0/1a1a1a?text=UI%2FUX+Workshop" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-workshop">Workshop</span>
+                        <h5 class="card-title">Workshop UI/UX Design untuk Pemula</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 28 Nov 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Lab Komputer FIK
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 46%;"></div></div>
+                        <span class="quota-text">23/50 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/FEF08A/1a1a1a?text=Hackathon" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-lomba">Lomba</span>
+                        <h5 class="card-title">Lomba Hackathon Nasional 2026</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 5 Des 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Gedung Rektorat
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 90%;"></div></div>
+                        <span class="quota-text">45/50 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/DDD6FE/1a1a1a?text=Cyber+Security" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-webinar">Webinar</span>
+                        <h5 class="card-title">Webinar Cyber Security Awareness</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 10 Des 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Online (Zoom)
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 30%;"></div></div>
+                        <span class="quota-text">30/100 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/FCE7F3/1a1a1a?text=Kewirausahaan" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-seminar">Seminar</span>
+                        <h5 class="card-title">Seminar Kewirausahaan Digital</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 15 Des 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Aula FEB
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 56%;"></div></div>
+                        <span class="quota-text">28/50 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="https://placehold.co/400x200/FED7AA/1a1a1a?text=Web+Dev" alt="Poster Event">
+                    <div class="card-body">
+                        <span class="badge-neo badge-workshop">Workshop</span>
+                        <h5 class="card-title">Workshop Web Development 2026</h5>
+                        <p class="card-text">
+                            <i class="bi bi-calendar3"></i> 20 Des 2026 &nbsp;
+                            <i class="bi bi-geo-alt"></i> Lab Komputer FIK
+                        </p>
+                        <div class="quota-bar"><div class="quota-bar-fill" style="width: 80%;"></div></div>
+                        <span class="quota-text">40/50 slot terisi</span>
+                        <div class="card-footer-actions">
+                            <a href="#" class="btn-neo btn-neo-sm w-100">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-neo">
+        CAMPUSPASS &copy; 2026 &bull; Kelompok 4 Praktikum Pemrograman Web
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

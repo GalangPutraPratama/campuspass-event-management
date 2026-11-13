@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAMPUSPASS: Katalog Event Kampus</title>
+  <!-- Google Fonts: Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Custom Neo Brutalism CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg navbar-neo sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span>⚡</span> CAMPUSPASS
+      </a>
+      <button class="navbar-toggler navbar-toggler-neo" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-3"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav ms-auto me-3 gap-1">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="checkin.html">Check-in</a>
+          </li>
+        </ul>
+        <a href="login.html" class="btn-nav-login">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <header class="hero-section">
+    <div class="container">
+      <h1>Temukan Event Kampus<br><span>Terbaik &amp; Seru!</span></h1>
+      <p class="hero-subtitle">
+        Platform pendaftaran dan e-ticketing event kampus yang terintegrasi. Cari, daftar, dan kelola tiket event dalam satu tempat.
+      </p>
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Cari event, seminar, workshop...">
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== STATS ROW ========== -->
+  <section class="container">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Event Terlaksana</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1.200+</div>
+        <div class="stat-label">Peserta Terdaftar</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">UKM &amp; Organisasi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EVENT CATALOG GRID ========== -->
+  <main class="container my-4">
+    <div class="section-heading">
+      <div>
+        <span>📅 Event Mendatang</span>
+      </div>
+      <a href="#" class="btn-neo btn-neo-outline btn-neo-sm">
+        Lihat Semua <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Card 1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/BFDBFE/1a1a1a?text=Seminar+AI" alt="Seminar Nasional AI">
+          <div class="card-body">
+            <span class="badge-neo badge-seminar">Seminar</span>
+            <h2 class="card-title">Seminar Nasional AI &amp; Machine Learning 2026</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 25 November 2026
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Auditorium Utama
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>35 / 50</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 70%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/BBF7D0/1a1a1a?text=Workshop+UIUX" alt="Workshop UI/UX Design">
+          <div class="card-body">
+            <span class="badge-neo badge-workshop">Workshop</span>
+            <h2 class="card-title">Workshop UI/UX Design: Figma Masterclass</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 2 Desember 2026
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Lab Komputer Lt. 3
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>28 / 40</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 70%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/FEF08A/1a1a1a?text=Hackathon" alt="Lomba Hackathon Nasional">
+          <div class="card-body">
+            <span class="badge-neo badge-lomba">Lomba</span>
+            <h2 class="card-title">Lomba Hackathon Nasional 2026</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 10 Desember 2026
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Gedung Serbaguna
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>42 / 60</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 70%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/DDD6FE/1a1a1a?text=Cyber+Security" alt="Webinar Cyber Security">
+          <div class="card-body">
+            <span class="badge-neo badge-webinar">Webinar</span>
+            <h2 class="card-title">Webinar Cyber Security: Ethical Hacking 101</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 15 Desember 2026
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Online via Zoom
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>89 / 100</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 89%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/FED7AA/1a1a1a?text=Kewirausahaan" alt="Seminar Kewirausahaan Digital">
+          <div class="card-body">
+            <span class="badge-neo badge-seminar">Seminar</span>
+            <h2 class="card-title">Seminar Kewirausahaan Digital di Era AI</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 20 Desember 2026
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Aula Fakultas Ekonomi
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>18 / 50</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 36%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="event-card">
+          <img src="https://placehold.co/600x320/FCE7F3/1a1a1a?text=Web+Dev" alt="Workshop Web Development">
+          <div class="card-body">
+            <span class="badge-neo badge-workshop">Workshop</span>
+            <h2 class="card-title">Workshop Web Development: Laravel &amp; Bootstrap</h2>
+            <div class="card-meta">
+              <i class="bi bi-calendar3"></i> 5 Januari 2027
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-geo-alt"></i> Lab Komputer Lt. 2
+            </div>
+            <div class="card-footer-actions">
+              <div class="quota-text">
+                <span>Kuota Terisi</span>
+                <span>12 / 30</span>
+              </div>
+              <div class="quota-bar">
+                <div class="quota-bar-fill" style="width: 40%;"></div>
+              </div>
+              <a href="detail_event.html" class="btn-neo btn-neo-sm w-100 mt-3">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer-neo">
+    <div class="container">
+      <p class="mb-0">CAMPUSPASS &copy; 2026 - Kelompok 4 Praktikum Pemrograman Web</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
