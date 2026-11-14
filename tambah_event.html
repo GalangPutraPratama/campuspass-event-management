@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Event Baru - CAMPUSPASS</title>
+
+    <!-- Google Fonts: Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        :root {
+            --pink: #EC4899;
+            --pink-light: #FCE7F3;
+            --yellow: #FEF08A;
+            --green: #BBF7D0;
+            --blue: #BFDBFE;
+            --purple: #DDD6FE;
+            --orange: #FED7AA;
+            --bg: #FFFBF5;
+            --text: #1a1a1a;
+            --border: #1a1a1a;
+            --shadow: 4px 4px 0px #1a1a1a;
+            --shadow-lg: 6px 6px 0px #1a1a1a;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        .navbar-neo {
+            background: var(--pink);
+            border-bottom: 3px solid var(--border);
+            padding: 12px 0;
+        }
+        .navbar-neo .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar-neo .nav-link {
+            color: #fff;
+            font-weight: 600;
+            margin: 0 4px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+        .navbar-neo .nav-link:hover,
+        .navbar-neo .nav-link.active {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .btn-nav-login {
+            background: #fff;
+            color: var(--pink);
+            font-weight: 700;
+            border: 2.5px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 18px;
+            box-shadow: 3px 3px 0px var(--border);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+        .btn-nav-login:hover {
+            transform: translate(1.5px, 1.5px);
+            box-shadow: 1.5px 1.5px 0px var(--border);
+            color: var(--pink);
+        }
+
+        /* CARDS */
+        .card-neo {
+            background: #fff;
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: all 0.15s;
+        }
+        .card-neo-yellow { background: var(--yellow); }
+        .card-neo-blue { background: var(--blue); }
+        .card-neo-green { background: var(--green); }
+        .card-neo-purple { background: var(--purple); }
+        .card-neo-pink-light { background: var(--pink-light); }
+
+        /* BADGES */
+        .badge-neo {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-seminar { background: var(--blue); color: var(--text); }
+        .badge-workshop { background: var(--green); color: var(--text); }
+        .badge-lomba { background: var(--yellow); color: var(--text); }
+        .badge-webinar { background: var(--purple); color: var(--text); }
+
+        /* BUTTONS */
+        .btn-neo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--pink);
+            color: #fff;
+            font-weight: 700;
+            border: 2.5px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-neo:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border);
+            color: #fff;
+        }
+        .btn-neo-outline {
+            background: #fff;
+            color: var(--text);
+            border: 2.5px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .btn-neo-outline:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border);
+            color: var(--text);
+        }
+        .btn-neo-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            box-shadow: 3px 3px 0px var(--border);
+        }
+
+        /* FORMS NEO */
+        .form-label-neo {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: block;
+            color: var(--text);
+        }
+        .form-control-neo, .form-select-neo {
+            width: 100%;
+            border: 2.5px solid var(--border);
+            border-radius: 8px;
+            padding: 11px 15px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            background: #fff;
+            box-shadow: 3px 3px 0px var(--border);
+            color: var(--text);
+            transition: all 0.15s;
+        }
+        .form-control-neo:focus, .form-select-neo:focus {
+            outline: none;
+            box-shadow: 5px 5px 0px var(--border);
+            border-color: var(--border);
+            background: #fff;
+        }
+
+        /* FOOTER */
+        .footer-neo {
+            background: var(--text);
+            color: #fff;
+            text-align: center;
+            padding: 24px 0;
+            margin-top: 60px;
+            border-top: 3px solid var(--border);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-neo sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>⚡</span> CAMPUSPASS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" style="border: 2px solid #fff; color: #fff;">
+                <i class="bi bi-list fs-2 text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto align-items-center gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="detail_event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="checkin.html">Check-in</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a href="login.html" class="btn-nav-login">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container py-4">
+
+        <!-- TOMBOL KEMBALI KE DASHBOARD -->
+        <div class="mb-4">
+            <a href="dashboard.html" class="btn-neo btn-neo-outline btn-neo-sm">
+                <i class="bi bi-arrow-left"></i> Kembali ke Dashboard Panitia
+            </a>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- MAIN CARD: FORM TAMBAH EVENT BARU -->
+                <div class="card-neo">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge-neo badge-lomba">
+                            <i class="bi bi-plus-circle-fill me-1"></i> Panitia Event
+                        </span>
+                        <span class="text-muted small fw-semibold">Status: Draf Event Baru</span>
+                    </div>
+
+                    <h1 class="fw-bold mb-1" style="font-size: 1.85rem;">
+                        <i class="bi bi-calendar-plus text-primary me-2"></i>Tambah Event Baru
+                    </h1>
+                    <p class="text-muted mb-4 pb-2" style="border-bottom: 2px solid var(--border);">
+                        Isi lengkap informasi kegiatan kampus di bawah ini. Pastikan jadwal, kuota peserta, dan narahubung sudah akurat sebelum disimpan.
+                    </p>
+
+                    <form onsubmit="event.preventDefault(); alert('Event baru berhasil disimpan! Sekarang event akan tampil di katalog dan dashboard.'); window.location.href='dashboard.html';">
+
+                        <!-- JUDUL EVENT & KATEGORI -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label-neo" for="judulEvent">
+                                    <i class="bi bi-fonts me-1"></i> Judul Event <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="judulEvent" 
+                                       class="form-control-neo" 
+                                       placeholder="Contoh: Workshop UI/UX Design & Prototyping 2026" 
+                                       required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-neo" for="kategoriEvent">
+                                    <i class="bi bi-tag-fill me-1"></i> Kategori Event <span class="text-danger">*</span>
+                                </label>
+                                <select id="kategoriEvent" class="form-select-neo" required>
+                                    <option value="" selected disabled>Pilih Kategori...</option>
+                                    <option value="Seminar">Seminar</option>
+                                    <option value="Workshop">Workshop</option>
+                                    <option value="Lomba">Lomba / Hackathon</option>
+                                    <option value="Webinar">Webinar Online</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- DESKRIPSI EVENT -->
+                        <div class="mb-3">
+                            <label class="form-label-neo" for="deskripsiEvent">
+                                <i class="bi bi-text-paragraph me-1"></i> Deskripsi Lengkap Event <span class="text-danger">*</span>
+                            </label>
+                            <textarea id="deskripsiEvent" 
+                                      class="form-control-neo" 
+                                      rows="5" 
+                                      placeholder="Tuliskan latar belakang acara, pembicara / narasumber, topik yang dipelajari, fasilitas yang didapatkan peserta, serta rundown singkat kegiatan..." 
+                                      required></textarea>
+                            <small class="text-muted">Gunakan bahasa yang menarik untuk meningkatkan antusiasme calon pendaftar.</small>
+                        </div>
+
+                        <!-- TANGGAL WAKTU & LOKASI -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label-neo" for="tanggalWaktu">
+                                    <i class="bi bi-clock-history me-1"></i> Tanggal & Waktu Pelaksanaan <span class="text-danger">*</span>
+                                </label>
+                                <input type="datetime-local" 
+                                       id="tanggalWaktu" 
+                                       class="form-control-neo" 
+                                       required>
+                                <small class="text-muted">Pilih tanggal dan waktu dimulainya acara.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-neo" for="lokasiEvent">
+                                    <i class="bi bi-geo-alt-fill me-1 text-danger"></i> Lokasi Acara <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="lokasiEvent" 
+                                       class="form-control-neo" 
+                                       placeholder="Contoh: Gedung Rektorat Lt. 3 / Zoom Meeting" 
+                                       required>
+                                <small class="text-muted">Sebutkan nama ruangan fisik atau tautan daring.</small>
+                            </div>
+                        </div>
+
+                        <!-- KUOTA MAKSIMAL & BIAYA PENDAFTARAN -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label-neo" for="kuotaMaksimal">
+                                    <i class="bi bi-people-fill me-1 text-success"></i> Kuota Maksimal Peserta <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" 
+                                       id="kuotaMaksimal" 
+                                       class="form-control-neo" 
+                                       placeholder="Contoh: 100" 
+                                       min="1" 
+                                       required>
+                                <small class="text-muted">Pendaftaran akan otomatis ditutup jika batas kuota tercapai.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-neo" for="biayaPendaftaran">
+                                    <i class="bi bi-cash-stack me-1 text-primary"></i> Biaya Pendaftaran (Rp) <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" 
+                                       id="biayaPendaftaran" 
+                                       class="form-control-neo" 
+                                       placeholder="0 jika gratis (Free HTM)" 
+                                       min="0" 
+                                       required>
+                                <small class="text-muted">Ketik angka nominal tanpa tanda titik (misal: 25000).</small>
+                            </div>
+                        </div>
+
+                        <!-- NARAHUBUNG / WHATSAPP -->
+                        <div class="mb-3">
+                            <label class="form-label-neo" for="narahubung">
+                                <i class="bi bi-whatsapp me-1 text-success"></i> Narahubung / WhatsApp Panitia <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="narahubung" 
+                                   class="form-control-neo" 
+                                   placeholder="Contoh: 0812-3456-7890 (Budi Gunawan)" 
+                                   required>
+                            <small class="text-muted">Kontak ini akan ditampilkan di halaman detail event untuk melayani pertanyaan peserta.</small>
+                        </div>
+
+                        <!-- UPLOAD POSTER EVENT -->
+                        <div class="mb-4">
+                            <label class="form-label-neo" for="posterEvent">
+                                <i class="bi bi-image-fill me-1 text-warning"></i> Upload Banner / Poster Event <span class="text-danger">*</span>
+                            </label>
+                            <input type="file" 
+                                   id="posterEvent" 
+                                   class="form-control-neo" 
+                                   accept="image/*" 
+                                   required>
+                            <small class="text-muted d-block mt-1">
+                                Format: JPG, JPEG, atau PNG. Ukuran maksimal 5MB. Rasio terbaik 16:9 atau resolusi minimal 1200x675 pixel.
+                            </small>
+                        </div>
+
+                        <!-- KOTAK PANDUAN RINGKAS (PASTEL YELLOW) -->
+                        <div class="p-3 rounded-3 mb-4 card-neo-yellow" style="border: 2px solid var(--border);">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="bi bi-lightbulb-fill fs-4 text-warning"></i>
+                                <div class="small">
+                                    <strong>Tips Sukses Publikasi Event:</strong>
+                                    Pastikan judul jelas dan deskripsi memuat manfaat konkret bagi mahasiswa. Event yang baru dibuat akan berstatus langsung aktif di katalog umum dan siap menerima pendaftaran.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TOMBOL AKSI -->
+                        <div class="d-flex flex-column flex-sm-row gap-3 pt-2">
+                            <button type="submit" class="btn-neo btn-lg px-4 flex-grow-1">
+                                <i class="bi bi-check-circle-fill"></i> Simpan Event
+                            </button>
+                            <a href="dashboard.html" class="btn-neo btn-neo-outline btn-lg px-4">
+                                <i class="bi bi-x-circle"></i> Batal
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-neo">
+        <div class="container">
+            <p class="mb-0">
+                CAMPUSPASS &copy; 2026 : Sistem E-Ticketing Event Kampus : Kelompok 4 Praktikum Pemrograman Web
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
