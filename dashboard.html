@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Panitia - CAMPUSPASS</title>
+
+    <!-- Google Fonts: Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom Neo Brutalism CSS (global) -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--
+        Style khusus halaman dashboard.
+        Selector sengaja dibuat lebih spesifik supaya tidak kalah oleh css/style.css
+        (mis. .stat-card:nth-child(n) yang mewarnai semua kartu jadi hijau,
+        header tabel pink-light, dan .btn-neo-sm / .btn-neo-danger versi global).
+    -->
+    <style>
+        /* Stat cards: warna pastel per kartu */
+        .row .stat-card {
+            flex: none;
+            min-width: 0;
+            max-width: none;
+            padding: 20px;
+            height: 100%;
+        }
+        .row .stat-card.stat-card-green  { background: var(--green); }
+        .row .stat-card.stat-card-blue   { background: var(--blue); }
+        .row .stat-card.stat-card-yellow { background: var(--yellow); }
+        .row .stat-card.stat-card-purple { background: var(--purple); }
+        .row .stat-card .stat-num   { font-size: 2.5rem; }
+        .row .stat-card .stat-label { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-top: 6px; }
+
+        /* Kartu filter: tidak perlu efek hover/tinggi penuh seperti kartu event */
+        .card-neo.card-filter {
+            display: block;
+            height: auto;
+            overflow: visible;
+            padding: 24px;
+        }
+        .card-neo.card-filter:hover {
+            transform: none;
+            box-shadow: var(--shadow);
+        }
+
+        /* Badge status (belum ada di style.css global) */
+        .badge-approved { background: var(--green); color: var(--text); }
+        .badge-rejected { background: var(--pink-light); color: #991b1b; }
+        .table-neo .badge-neo { margin-bottom: 0; white-space: nowrap; }
+
+        /* Tabel: satu border luar saja (milik wrapper), header kuning */
+        .table-neo-wrapper .table-neo {
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .table-neo-wrapper .table-neo thead th {
+            background: var(--yellow);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .table-neo-wrapper .table-neo tbody td { white-space: nowrap; }
+
+        /* Tombol aksi kecil di dalam tabel */
+        .table-neo .btn-neo-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 2px 2px 0px var(--border);
+            cursor: pointer;
+        }
+        .table-neo .btn-neo-sm:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--border);
+        }
+        .table-neo .btn-neo-danger { background: var(--pink-light); color: #991b1b; }
+        .table-neo .btn-neo-danger:hover { background: #fbcfe8; color: #991b1b; }
+        .table-neo .btn-neo-sm:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR (sama dengan index.html) -->
+    <nav class="navbar navbar-expand-lg navbar-neo sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span>⚡</span> CAMPUSPASS
+            </a>
+            <button class="navbar-toggler navbar-toggler-neo" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto me-3 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html" aria-current="page">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="checkin.html">Check-in</a>
+                    </li>
+                </ul>
+                <a href="login.html" class="btn-nav-login">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container py-4">
+
+        <!-- HEADER DASHBOARD + TOMBOL TAMBAH EVENT -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-2">
+            <div>
+                <span class="badge-neo badge-approved mb-1">
+                    <i class="bi bi-shield-lock-fill me-1"></i> Admin Panel
+                </span>
+                <h1 class="fw-bold mb-1" style="font-size: 2rem;">⚡ Dashboard Panitia</h1>
+                <p class="text-muted mb-0">Pantau statistik kehadiran, verifikasi status pendaftar, dan kelola event kampus.</p>
+            </div>
+            <div>
+                <a href="tambah_event.html" class="btn-neo">
+                    <i class="bi bi-plus-circle-fill"></i> Tambah Event
+                </a>
+            </div>
+        </div>
+
+        <!-- 4 KARTU STATISTIK -->
+        <div class="row g-3 mb-5">
+            <div class="col-6 col-lg-3">
+                <div class="stat-card stat-card-green">
+                    <i class="bi bi-calendar-check-fill fs-2 text-success"></i>
+                    <div class="stat-num">3</div>
+                    <div class="stat-label">Total Event</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card stat-card-blue">
+                    <i class="bi bi-people-fill fs-2 text-primary"></i>
+                    <div class="stat-num">127</div>
+                    <div class="stat-label">Total Pendaftar</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card stat-card-yellow">
+                    <i class="bi bi-cash-coin fs-2 text-warning"></i>
+                    <div class="stat-num">98</div>
+                    <div class="stat-label">Sudah Bayar</div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card stat-card-purple">
+                    <i class="bi bi-person-check-fill fs-2" style="color: #6b21a8;"></i>
+                    <div class="stat-num">45</div>
+                    <div class="stat-label">Sudah Hadir</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTER & PENCARIAN -->
+        <div class="card-neo card-filter mb-4">
+            <h2 class="h5 fw-bold mb-3">
+                <i class="bi bi-funnel-fill me-2"></i>Filter &amp; Pencarian Peserta
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label-neo" for="filterEvent">Event</label>
+                    <select id="filterEvent" class="form-select-neo">
+                        <option value="all" selected>Semua event</option>
+                        <option value="ai">Seminar Nasional AI &amp; Machine Learning 2026</option>
+                        <option value="uiux">Workshop UI/UX Design: Figma Masterclass</option>
+                        <option value="hackathon">Lomba Hackathon Nasional 2026</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label-neo" for="filterStatus">Status pembayaran</label>
+                    <select id="filterStatus" class="form-select-neo">
+                        <option value="all" selected>Semua status</option>
+                        <option value="approved">Approved</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label-neo" for="searchKeyword">Cari peserta</label>
+                    <input type="search" id="searchKeyword" class="form-control-neo"
+                           placeholder="Nama, NIM, atau email" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <!-- TABEL PENDAFTAR -->
+        <div class="mb-4">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-2">
+                <h2 class="h3 fw-bold mb-0">
+                    <i class="bi bi-table me-2"></i>Daftar Peserta Masuk
+                </h2>
+                <span class="badge-neo badge-approved mb-0" id="jumlahTampil" aria-live="polite">Menampilkan 8 dari 127 data pendaftar</span>
+            </div>
+
+            <div class="table-neo-wrapper">
+                <table class="table-neo" id="tabelPendaftar">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 50px;">No</th>
+                            <th>Nama Lengkap</th>
+                            <th>NIM</th>
+                            <th>Email</th>
+                            <th>WhatsApp</th>
+                            <th>Fakultas</th>
+                            <th class="text-center">Status Bayar</th>
+                            <th class="text-center" style="width: 190px;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-event="ai" data-status="approved">
+                            <td class="text-center fw-bold">1</td>
+                            <td class="fw-bold">Aditia Pratama</td>
+                            <td><span class="font-monospace">220101001</span></td>
+                            <td>aditia.p@student.ac.id</td>
+                            <td>0812-3456-7801</td>
+                            <td>FASILKOM</td>
+                            <td class="text-center"><span class="badge-neo badge-approved"><i class="bi bi-check-circle-fill"></i> Approved</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Peserta Aditia Pratama sudah disetujui');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Batalkan status Aditia Pratama?');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="uiux" data-status="pending">
+                            <td class="text-center fw-bold">2</td>
+                            <td class="fw-bold">Siti Rahmawati</td>
+                            <td><span class="font-monospace">220101045</span></td>
+                            <td>siti.rahma@student.ac.id</td>
+                            <td>0813-8899-7711</td>
+                            <td>FASILKOM</td>
+                            <td class="text-center"><span class="badge-neo badge-pending"><i class="bi bi-hourglass-split"></i> Pending</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Menyetujui pendaftaran Siti Rahmawati');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Menolak pendaftaran Siti Rahmawati');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="hackathon" data-status="approved">
+                            <td class="text-center fw-bold">3</td>
+                            <td class="fw-bold">Muhammad Farhan</td>
+                            <td><span class="font-monospace">220202014</span></td>
+                            <td>farhan.m@student.ac.id</td>
+                            <td>0821-4455-6677</td>
+                            <td>FEB</td>
+                            <td class="text-center"><span class="badge-neo badge-approved"><i class="bi bi-check-circle-fill"></i> Approved</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Peserta Muhammad Farhan sudah disetujui');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Batalkan status Muhammad Farhan?');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="ai" data-status="pending">
+                            <td class="text-center fw-bold">4</td>
+                            <td class="fw-bold">Dinda Permata Putri</td>
+                            <td><span class="font-monospace">220301033</span></td>
+                            <td>dinda.permata@student.ac.id</td>
+                            <td>0857-1122-3344</td>
+                            <td>FT (Teknik)</td>
+                            <td class="text-center"><span class="badge-neo badge-pending"><i class="bi bi-hourglass-split"></i> Pending</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Menyetujui pendaftaran Dinda Permata Putri');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Menolak pendaftaran Dinda Permata Putri');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="hackathon" data-status="rejected">
+                            <td class="text-center fw-bold">5</td>
+                            <td class="fw-bold">Rizky Maulana Putra</td>
+                            <td><span class="font-monospace">220102078</span></td>
+                            <td>rizky.m@student.ac.id</td>
+                            <td>0812-9900-1122</td>
+                            <td>FASILKOM</td>
+                            <td class="text-center"><span class="badge-neo badge-rejected"><i class="bi bi-x-circle-fill"></i> Rejected</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Meninjau ulang pendaftaran Rizky Maulana Putra');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Pendaftaran Rizky Maulana Putra sudah ditolak');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="uiux" data-status="approved">
+                            <td class="text-center fw-bold">6</td>
+                            <td class="fw-bold">Nurul Hidayah</td>
+                            <td><span class="font-monospace">220401021</span></td>
+                            <td>nurul.h@student.ac.id</td>
+                            <td>0852-7788-9900</td>
+                            <td>FH (Hukum)</td>
+                            <td class="text-center"><span class="badge-neo badge-approved"><i class="bi bi-check-circle-fill"></i> Approved</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Peserta Nurul Hidayah sudah disetujui');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Batalkan status Nurul Hidayah?');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="ai" data-status="pending">
+                            <td class="text-center fw-bold">7</td>
+                            <td class="fw-bold">Ahmad Fauzi Siregar</td>
+                            <td><span class="font-monospace">220501056</span></td>
+                            <td>ahmad.fauzi@student.ac.id</td>
+                            <td>0819-3344-5566</td>
+                            <td>FISIP</td>
+                            <td class="text-center"><span class="badge-neo badge-pending"><i class="bi bi-hourglass-split"></i> Pending</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Menyetujui pendaftaran Ahmad Fauzi Siregar');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Menolak pendaftaran Ahmad Fauzi Siregar');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-event="hackathon" data-status="approved">
+                            <td class="text-center fw-bold">8</td>
+                            <td class="fw-bold">Putri Maharani</td>
+                            <td><span class="font-monospace">220601019</span></td>
+                            <td>putri.m@student.ac.id</td>
+                            <td>0878-5566-7788</td>
+                            <td>FK (Kedokteran)</td>
+                            <td class="text-center"><span class="badge-neo badge-approved"><i class="bi bi-check-circle-fill"></i> Approved</span></td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" class="btn-neo-sm btn-neo-success" onclick="alert('Peserta Putri Maharani sudah disetujui');"><i class="bi bi-check-lg"></i> Approve</button>
+                                    <button type="button" class="btn-neo-sm btn-neo-danger" onclick="alert('Batalkan status Putri Maharani?');"><i class="bi bi-x-lg"></i> Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Tampil hanya saat hasil filter kosong -->
+                        <tr id="barisKosong" hidden>
+                            <td colspan="8" class="text-center fw-bold py-4">Tidak ada peserta yang cocok. Ubah filter atau kata kunci pencarian.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-neo">
+        <div class="container">
+            <p class="mb-0">CAMPUSPASS &copy; 2026 - Kelompok 4 Praktikum Pemrograman Web</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Filter tampilan (data dummy, tanpa backend) -->
+    <script>
+        (function () {
+            var selEvent = document.getElementById('filterEvent');
+            var selStatus = document.getElementById('filterStatus');
+            var inputCari = document.getElementById('searchKeyword');
+            var label = document.getElementById('jumlahTampil');
+            var barisKosong = document.getElementById('barisKosong');
+            var rows = Array.prototype.slice.call(
+                document.querySelectorAll('#tabelPendaftar tbody tr[data-event]')
+            );
+
+            function terapkanFilter() {
+                var kata = inputCari.value.trim().toLowerCase();
+                var tampil = 0;
+
+                rows.forEach(function (row) {
+                    // Pencarian hanya di kolom Nama, NIM, dan Email
+                    var teks = [1, 2, 3].map(function (i) {
+                        return row.cells[i].textContent;
+                    }).join(' ').toLowerCase();
+
+                    var cocok =
+                        (selEvent.value === 'all' || row.dataset.event === selEvent.value) &&
+                        (selStatus.value === 'all' || row.dataset.status === selStatus.value) &&
+                        (kata === '' || teks.indexOf(kata) !== -1);
+
+                    row.hidden = !cocok;
+                    if (cocok) {
+                        tampil++;
+                        row.cells[0].textContent = tampil; // nomor urut mengikuti baris yang tampil
+                    }
+                });
+
+                barisKosong.hidden = tampil !== 0;
+                label.textContent = 'Menampilkan ' + tampil + ' dari 127 data pendaftar';
+            }
+
+            selEvent.addEventListener('change', terapkanFilter);
+            selStatus.addEventListener('change', terapkanFilter);
+            inputCari.addEventListener('input', terapkanFilter);
+        })();
+    </script>
+</body>
+</html>
