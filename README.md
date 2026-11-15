@@ -1,4 +1,4 @@
-# CAMPUSPASS ⚡
+# CAMPUSPASS
 
 Sistem Pendaftaran, E-Ticketing, dan Fast Check-in Event Kampus (UKM/Seminar) Berbasis Web.  
 Project Akhir Praktikum Pemrograman Web - Kelompok 4.
