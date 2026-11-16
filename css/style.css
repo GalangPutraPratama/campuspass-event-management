@@ -39,6 +39,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+nav div a img {
+  max-height: 40px;
+  object-fit: contain;
+}
+
 a {
   color: var(--text);
   text-decoration: none;
