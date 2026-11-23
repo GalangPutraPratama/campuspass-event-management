@@ -1,0 +1,4 @@
+uploads/pembayaran/*
+!uploads/pembayaran/.gitkeep
+uploads/ktm/*
+!uploads/ktm/.gitkeep
