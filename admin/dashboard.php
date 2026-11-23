@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/csrf.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 require_login();
@@ -107,7 +108,15 @@ try {
 
     $events = admin_query(
         $conn,
-        "SELECT e.id, e.judul_event FROM events e $scopeWhere ORDER BY e.created_at DESC, e.id DESC",
+        "SELECT e.id, e.judul_event, e.kategori, e.tanggal_kegiatan, e.lokasi, e.kuota_maksimal,
+                e.biaya_pendaftaran, e.created_by, u.nama_lengkap AS pembuat,
+                COUNT(CASE WHEN p.status_bayar = 'Approved' THEN p.id END) AS kuota_terisi
+         FROM events e
+         LEFT JOIN users u ON u.id = e.created_by
+         LEFT JOIN pendaftaran p ON p.event_id = e.id
+         $scopeWhere
+         GROUP BY e.id
+         ORDER BY e.created_at DESC, e.id DESC",
         $scopeTypes,
         $scopeParams
     );
@@ -115,7 +124,7 @@ try {
     $recent = admin_query(
         $conn,
         "SELECT p.id, p.nama_lengkap, p.nim, p.email, p.no_whatsapp, p.fakultas,
-                p.bukti_pembayaran, p.status_bayar, p.status_kehadiran
+                p.bukti_pembayaran, p.status_bayar, p.status_kehadiran, e.judul_event
          FROM pendaftaran p
          INNER JOIN events e ON e.id = p.event_id
          $scopeWhere
@@ -204,6 +213,8 @@ $baseUrl   = '/CAMPUSPASS/';
     .table-neo .btn-neo-sm:disabled { opacity: 0.45; cursor: not-allowed; }
     .table-neo .btn-neo-danger { background: var(--pink-light); color: #991b1b; }
     .table-neo .btn-neo-danger:hover:not(:disabled) { background: #fbcfe8; color: #991b1b; }
+    .table-neo .btn-neo-warning { background: var(--yellow); color: var(--text); }
+    .table-neo .btn-neo-warning:hover:not(:disabled) { background: #fef08a; color: var(--text); }
     .table-neo .btn-neo-sm:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
 </style>
 
@@ -254,6 +265,76 @@ $baseUrl   = '/CAMPUSPASS/';
                 <div class="stat-num"><?= e((string) $stats['hadir']) ?></div>
                 <div class="stat-label">Sudah Hadir</div>
             </div>
+        </div>
+    </div>
+
+    <!-- TABEL KELOLA EVENT (TOMBOL EDIT & HAPUS) -->
+    <div class="mb-5">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-2">
+            <h2 class="h3 fw-bold mb-0">
+                <i class="bi bi-calendar-event me-2"></i>Kelola Event Kampus
+            </h2>
+            <a href="event_tambah.php" class="btn-neo btn-neo-sm">
+                <i class="bi bi-plus-lg"></i> Event Baru
+            </a>
+        </div>
+
+        <div class="table-neo-wrapper">
+            <table class="table-neo" id="tabelEvents">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 50px;">No</th>
+                        <th>Judul Event</th>
+                        <th>Kategori</th>
+                        <th>Tanggal Pelaksanaan</th>
+                        <th>Lokasi</th>
+                        <th class="text-center">Kuota Terisi</th>
+                        <th>Biaya</th>
+                        <?php if ($isAdmin): ?>
+                            <th>Pembuat</th>
+                        <?php endif; ?>
+                        <th class="text-center" style="width: 170px;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!$events): ?>
+                        <tr>
+                            <td colspan="<?= $isAdmin ? '9' : '8' ?>" class="text-center fw-bold py-4">Belum ada event yang dibuat.</td>
+                        </tr>
+                    <?php endif; ?>
+
+                    <?php foreach ($events as $i => $ev): ?>
+                        <tr>
+                            <td class="text-center fw-bold"><?= e((string) ($i + 1)) ?></td>
+                            <td class="fw-bold"><?= e($ev['judul_event']) ?></td>
+                            <td><span class="badge-neo"><?= e($ev['kategori']) ?></span></td>
+                            <td><?= e(date('d M Y H:i', strtotime($ev['tanggal_kegiatan']))) ?> WIB</td>
+                            <td><?= e($ev['lokasi']) ?></td>
+                            <td class="text-center">
+                                <span class="fw-bold"><?= (int) $ev['kuota_terisi'] ?> / <?= (int) $ev['kuota_maksimal'] ?></span>
+                            </td>
+                            <td><?= (float) $ev['biaya_pendaftaran'] > 0 ? 'Rp ' . number_format((float) $ev['biaya_pendaftaran'], 0, ',', '.') : 'Gratis' ?></td>
+                            <?php if ($isAdmin): ?>
+                                <td><?= e($ev['pembuat'] ?? 'Admin') ?></td>
+                            <?php endif; ?>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1">
+                                    <a href="event_edit.php?id=<?= (int) $ev['id'] ?>" class="btn-neo-sm btn-neo-warning" title="Edit Event">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <form method="post" action="event_hapus.php" class="d-inline" onsubmit="return confirm('Hapus event ini beserta data pendaftarannya?');">
+                                        <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
+                                        <input type="hidden" name="id" value="<?= (int) $ev['id'] ?>">
+                                        <button type="submit" class="btn-neo-sm btn-neo-danger" title="Hapus Event">
+                                            <i class="bi bi-trash-fill"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -319,7 +400,7 @@ $baseUrl   = '/CAMPUSPASS/';
                         <th>NIM</th>
                         <th>Email</th>
                         <th>WhatsApp</th>
-                        <th>Fakultas</th>
+                        <th>Event</th>
                         <th class="text-center">Bukti</th>
                         <th class="text-center">Status Bayar</th>
                         <th class="text-center" style="width: 190px;">Aksi</th>
@@ -340,7 +421,7 @@ $baseUrl   = '/CAMPUSPASS/';
                             <td><span class="font-monospace"><?= e($row['nim']) ?></span></td>
                             <td><?= e($row['email']) ?></td>
                             <td><?= e($row['no_whatsapp']) ?></td>
-                            <td><?= e($row['fakultas']) ?></td>
+                            <td><?= e($row['judul_event']) ?></td>
                             <td class="text-center"><?= admin_bukti_link($row['bukti_pembayaran']) ?></td>
                             <td class="text-center">
                                 <span class="badge-neo <?= e($badgeClass) ?>">
